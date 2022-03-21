@@ -12,6 +12,8 @@ urlpatterns = [
     path('', include(router.urls)),
     path('list/', views.List, name='list'),
     path('view/', views.View, name='view'),
-    path('average/<str:profId>/<str:moduleId>',
-         views.ModuleRating, name='average')
+    path('average/<str:id>/<str:moduleId>',
+         views.Average, name='average'),
+    path('rate/<int:rate>/<str:id>/<str:moduleId>/<str:year>/<str:semester>',
+         views.Rate, name='rate')
 ]

@@ -13,7 +13,6 @@ from .models import ProfRating
 def List(request):
     subjects = Module.objects.all()
     list = []
-    profList = []
     for sub in subjects:
         professors = sub.professors.all()
         x = ''
@@ -31,8 +30,6 @@ def List(request):
 def View(request):
     professors = Professor.objects.all()
     list = []
-    # subjects = Subject.objects.filter(professor='1IT')
-
     for prof in professors:
         p = {
             'name': prof.name, 'average': prof.ratings.aggregate(Avg('rating'))['rating__avg']
@@ -45,7 +42,19 @@ def View(request):
 
 
 @api_view(['GET'])
-def ModuleRating(request, profId, moduleId):
+def Average(request, id, moduleId):
     rating = ProfRating.objects.filter(
-        professor=profId, module=moduleId).aggregate(Avg('rating'))
+        professor=id, module=moduleId).aggregate(Avg('rating'))['rating__avg']
+    profName = Professor.objects.get(profId=id)
+    moduleName = Module.objects.get(code=moduleId)
+    
     return HttpResponse(rating)
+
+@api_view(['GET'])
+def Rate(request, rate, id, moduleId, year, semester):
+
+    prof = Professor.objects.get(profId=id)
+    mod = Module.objects.get(code=moduleId)
+    ProfRating.objects.create(professor=prof, module=mod, rating=rate)
+
+    return HttpResponse("success")
