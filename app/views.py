@@ -40,7 +40,7 @@ def View(request):
 
         result = {"Professors list": list}
         response = HttpResponse(json.dumps(result))
-        return HttpResponse(list)
+        return HttpResponse(response)
 
 
 # @api_view(['GET'])
@@ -50,8 +50,12 @@ def Average(request, id, moduleId):
             professor=id, module=moduleId).aggregate(Avg('rating'))['rating__avg']
         profName = Professor.objects.get(profId=id)
         moduleName = Module.objects.get(code=moduleId)
-
-        return HttpResponse(rating)
+        x = {
+            'name': profName.name, 'module': moduleName.name, 'average': rating
+        }
+        p = {"Module Rating": x}
+        response = HttpResponse(json.dumps(p))
+        return HttpResponse(response)
 
 
 # @api_view(['GET'])
@@ -61,4 +65,4 @@ def Rate(request, rate, id, moduleId, year, semester):
         mod = Module.objects.get(code=moduleId)
         ProfRating.objects.create(professor=prof, module=mod, rating=rate)
 
-        return HttpResponse("success")
+        return HttpResponse("successful rating")
