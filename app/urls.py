@@ -14,6 +14,6 @@ urlpatterns = [
     path('view/', views.View, name='view'),
     path('average/<str:id>/<str:moduleId>',
          views.Average, name='average'),
-    path('rate/<int:rate>/<str:id>/<str:moduleId>/<str:year>/<str:semester>',
+    path('rate/<int:rate>/<str:id>/<str:moduleId>',
          views.Rate, name='rate')
 ]

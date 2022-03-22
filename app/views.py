@@ -59,10 +59,11 @@ def Average(request, id, moduleId):
 
 
 # @api_view(['GET'])
-def Rate(request, rate, id, moduleId, year, semester):
+def Rate(request, rate, id, moduleId):
     if request.method == 'GET':
         prof = Professor.objects.get(profId=id)
         mod = Module.objects.get(code=moduleId)
         ProfRating.objects.create(professor=prof, module=mod, rating=rate)
-
-        return HttpResponse("successful rating")
+        p = {"output": 'successful'}
+        response = HttpResponse(json.dumps(p))
+        return HttpResponse(response)
