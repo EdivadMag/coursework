@@ -34,7 +34,7 @@ def View(request):
         list = []
         for prof in professors:
             p = {
-                'name': prof.name, 'average': prof.ratings.aggregate(Avg('rating'))['rating__avg']
+                'name': prof.name, 'average': int(float(str(prof.ratings.aggregate(Avg('rating'))['rating__avg'])))
             }
             list.append(p)
 
