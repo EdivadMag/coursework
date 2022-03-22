@@ -51,7 +51,7 @@ def Average(request, id, moduleId):
         profName = Professor.objects.get(profId=id)
         moduleName = Module.objects.get(code=moduleId)
         x = {
-            'name': profName.name, 'module': moduleName.name, 'average': rating
+            'name': profName.name, 'module': moduleName.name, 'average': int(str(rating))
         }
         p = {"Module Rating": x}
         response = HttpResponse(json.dumps(p))
